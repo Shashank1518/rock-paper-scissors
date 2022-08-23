@@ -1,0 +1,36 @@
+
+name: Github actions maven project
+
+
+on: 
+  push: 
+    branch: [ master ]
+
+
+jobs: 
+
+  build: 
+    runs-on: ubuntu-latest
+    
+    steps: 
+    -name: 1-Checkout main branch
+     uses: actions/checkout@v2
+    
+    
+    -name: 2-Set-up JDK version
+     uses: actions/setup-java@v1
+     with: 
+       java-version: 1.8
+       
+       
+    -name: 3-Have Github actions Build maven project
+     run: |
+       mvn -B package --file pom.xml
+       mkdir staging && cp target/*.jar staging
+       
+    -name: 4-Uploading Artifacts
+     run: actions/upload-artifact@v2
+       name: github-actions-artifact
+       path: staging
+    
+  
