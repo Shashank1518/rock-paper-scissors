@@ -29,7 +29,8 @@ jobs:
         mkdir staging && cp target/*.jar staging
        
     - name: 4-Uploading Artifacts
-      run: actions/upload-artifact@v2
-        name:github-actions-artifact
-        path:staging
+      uses: actions/upload-artifact@v2
+      with: 
+         name: github-actions-artifact
+         path: staging
    
