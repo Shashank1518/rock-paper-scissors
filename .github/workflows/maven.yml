@@ -27,13 +27,6 @@ jobs:
       run: |
         mvn -B package --file pom.xml
         mkdir staging && cp target/*.jar staging
-        
-    - name: SonarQube Scan
-      uses: kitabisa/sonarqube-action@v1.2.0
-      with: 
-        host: ${{ secrets.SONARQUBE_HOST }}
-        login: ${{ secrets.SONARQUBE_TOKEN }}
-        projectName: ${{ secrets.SONARQUBE_Name }}
        
     - name: 4-Uploading Artifacts
       uses: actions/upload-artifact@v2
