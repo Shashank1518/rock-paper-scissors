@@ -28,6 +28,7 @@ jobs:
         mvn -B package --file pom.xml
         mkdir staging && cp target/*.jar staging
        
+       
     - name: 4-Uploading Artifacts
       uses: actions/upload-artifact@v2
       with: 
