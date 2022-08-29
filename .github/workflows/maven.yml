@@ -33,6 +33,7 @@ jobs:
       with: 
         host: ${{ secrets.SONARQUBE_HOST }}
         login: ${{ secrets.SONARQUBE_TOKEN }}
+        projectName: ${{ secrets.SONARQUBE_Name }}
        
     - name: 4-Uploading Artifacts
       uses: actions/upload-artifact@v2
