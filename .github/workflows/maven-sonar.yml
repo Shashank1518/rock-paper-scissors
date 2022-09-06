@@ -25,33 +25,27 @@ jobs:
           java-version: 1.8
        
        
-      - name: 3-Have Github actions Build maven project
-        run: |
-          mvn -B package --file pom.xml
-          mkdir staging && cp target/*.jar staging
-        
-  sonarCloudTrigger:
-    needs: build
-    name: SonarCloud Trigger
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@master
-        
-      - name: Download code coverage results
-        uses: actions/download-artifact@v3
+      - name: 3-Remove pom
+        run: rm -f pom.xml 
+         # mvn -B package --file pom.xml
+         # mkdir staging && cp target/*.jar staging
+         
+      - name: 4-Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          name: code-coverage-report
-          path: bin
+          node-version: '16' 
           
-      - name: 4-Analyze with SonarCloud
+      - name: 5-Build
+        run: ant buildAll
+          
+      - name: 6-Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
        
        
-      - name: 5-Uploading Artifacts
+      - name: 7-Uploading Artifacts
         uses: actions/upload-artifact@v2
         with: 
           name: github-actions-artifact
